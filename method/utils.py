@@ -29,6 +29,7 @@ def find_and_click_by_base64(pic):
 
 def find_and_click_by_path(path):
     start_time = time.time()
+    success = False
     while (time.time() - start_time) < retry_times:
         try:
             # 尝试定位图片
@@ -37,9 +38,11 @@ def find_and_click_by_path(path):
                 print(f"已找到目标图片，用时{time.time() - start_time:.2f}秒")
                 pyautogui.moveTo(location)
                 pyautogui.click()
+                success = True
                 break
         except Exception as e:
             print(f"检测过程中出错: {e}")
+    return success
 
 
 def is_element_exist(driver, by, value, timeout=retry_times):
@@ -51,3 +54,19 @@ def is_element_exist(driver, by, value, timeout=retry_times):
         return True
     except:
         return False
+
+
+def wait_for_success(path):
+    start_time = time.time()
+    success = False
+    while (time.time() - start_time) < retry_times:
+        try:
+            # 尝试定位图片
+            location = pyautogui.locateCenterOnScreen(path)
+            if location:
+                print(f"已找到目标图片，用时{time.time() - start_time:.2f}秒")
+                success = True
+                break
+        except Exception as e:
+            print(f"检测过程中出错: {e}")
+    return success

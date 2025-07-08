@@ -5,7 +5,7 @@ import pyautogui
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
-from method.utils import find_and_click_by_base64, is_element_exist, find_and_click_by_path
+from method.utils import find_and_click_by_base64, is_element_exist, find_and_click_by_path, wait_for_success
 
 
 # 重试装饰器
@@ -62,9 +62,10 @@ def core_sky(driver):
         login_button.click()
         okx_button = driver.find_element(By.XPATH, "//span[contains(text(), 'OKX')]")
         okx_button.click()
-        if not is_element_exist(driver, By.CLASS_NAME, "checkin-action"):
-            find_and_click_by_path("picture/Snipaste_2025-07-06_19-31-45.png")
-            find_and_click_by_path("picture/Snipaste_2025-07-06_19-54-15.png")
+        find_and_click_by_path("picture/Snipaste_2025-07-06_19-31-45.png")
+        find_and_click_by_path("picture/Snipaste_2025-07-06_19-54-15.png")
+    # TODO 成功标识
+    wait_for_success('成功标识')
     check_in_button = driver.find_element(By.CLASS_NAME, "checkin-action")
     check_in_button.click()
     #     TODO 设置滑块操作，要怎么实现 目前手动操作限时5s
@@ -95,6 +96,7 @@ def billions(driver):
 @t(data=3)
 def zk_verify(driver):
     driver.get("https://points.zkverify.io/loyalty?referral_code=TNFJ6JBS")
+    find_and_click_by_path("picture/Snipaste_2025-07-06_19-54-15.png")
     find_and_click_by_path("picture/Snipaste_2025-07-06_19-54-15.png")
     check_in_button = driver.find_element(By.XPATH, "//button[text()='Check in']")
     check_in_button.click()
